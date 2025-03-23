@@ -7,7 +7,7 @@ OBJS_PROVIDED = main.o rgbapixel.o png.o
 
 CXX = g++
 LD = g++
-CXXFLAGS = -g -O0 -w -MMD -MP -c  
+CXXFLAGS = -g -O0 -Wall -Wextra -pedantic-errors -Werror -MMD -MP -c  
 
 LDFLAGS = -lpng
 
