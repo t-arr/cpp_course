@@ -89,7 +89,7 @@ private:
 
         /** An array of Letters currently allocated */
         /** Should be replaced with a vector instead */  
-        Letter * letters;
+        std::vector<Letter> letters;
   
         /**
          * Destructor/assignment operator clear helper function.

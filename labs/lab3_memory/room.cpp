@@ -62,8 +62,9 @@ Room::~Room()
  */
 void Room::addLetter(const Letter & L)
 {
-  letters[count_letters_allocated_to_Room++] = L;
-  total_students_in_Room += L.count_students_for_letter;
+	letters.push_back(L);
+	count_letters_allocated_to_Room = letters.size();
+	total_students_in_Room += L.count_students_for_letter;
 }
 
 /**
@@ -100,7 +101,7 @@ int Room::getCapacity() const
  */
 void Room::clear()
 {
-    delete [] letters;
+	letters.clear();
     count_letters_allocated_to_Room = 0;
     total_students_in_Room = 0;
 }
