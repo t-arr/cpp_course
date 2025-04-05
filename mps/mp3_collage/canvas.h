@@ -26,7 +26,7 @@ class Canvas: public Drawable
 		void draw(PNG& canvas) const;
 		
 	private:
-		PNGLayer* layers;
+		std::vector<PNGLayer> layers;
 		size_t layercount = 0;
 };
 
