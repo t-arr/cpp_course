@@ -121,7 +121,7 @@ void Truck::draw(PNG& canvas) const
 	cabin.draw(canvas);
 	window.draw(canvas);
 	engine.draw(canvas);
-	for (auto wheel : wheels) {
+	for (Circle wheel : wheels) {
 		wheel.draw(canvas);
 	}
 }
