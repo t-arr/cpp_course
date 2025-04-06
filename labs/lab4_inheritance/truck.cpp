@@ -115,6 +115,17 @@ void Truck::copy(const Truck& other)
 	engine = other.engine;
 }
 
+void Truck::draw(PNG& canvas) const
+{
+	trailer.draw(canvas);
+	cabin.draw(canvas);
+	window.draw(canvas);
+	engine.draw(canvas);
+	for (auto wheel : wheels) {
+		wheel.draw(canvas);
+	}
+}
+
 void Truck::clear()
 {
   // Nothing to do here as we do not have raw pointers to worry about
