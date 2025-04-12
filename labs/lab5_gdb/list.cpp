@@ -39,7 +39,14 @@ List<T>::~List()
 template <class T>
 void List<T>::clear()
 {
-    // @todo Graded in lab_gdb
+    ListNode* current = head;
+    while (current != nullptr) {
+        ListNode* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    head = nullptr;
+    length = 0;
 }
 
 /**
@@ -51,7 +58,10 @@ void List<T>::clear()
 template <class T>
 void List<T>::insertFront(T const & ndata)
 {
-    // @todo Graded in lab_gdb
+    ListNode* newNode = new ListNode(ndata);
+    newNode->next = head;
+    head = newNode;
+    length++;
 }
 
 /**
@@ -63,7 +73,6 @@ void List<T>::insertFront(T const & ndata)
 template <class T>
 void List<T>::insertBack(const T & ndata)
 {
-    // @todo Graded in lab_gdb
     ListNode * temp = head;
 
     if (temp == NULL)
@@ -74,9 +83,9 @@ void List<T>::insertBack(const T & ndata)
     {
         while (temp->next != NULL)
             temp = temp->next;
-        temp = new ListNode(ndata);
-        length++;
+        temp->next = new ListNode(ndata);
     }
+    length++;
 }
 
 /**
@@ -100,12 +109,10 @@ void List<T>::reverse()
 template <class T>
 typename List<T>::ListNode* List<T>::reverse(ListNode* curr, ListNode* prev, int len)
 {
-    // @todo Graded in lab_gdb
     ListNode * temp;
-    if (len <= 0)
+    if (curr == nullptr || len <= 0)
     {
-        curr->next = prev;
-        return curr;
+        return prev;
     }
     else
     {
@@ -126,5 +133,26 @@ typename List<T>::ListNode* List<T>::reverse(ListNode* curr, ListNode* prev, int
 template <class T>
 void List<T>::shuffle()
 {
-    // @todo Graded in lab_gdb
+    if (length == 0) {
+        return;
+    }
+
+    ListNode *one = head, *two = head, *prev = nullptr, *temp = nullptr;
+
+    int middle = (length % 2 == 0) ? length / 2 : (length / 2) + 1;
+    
+    for (int i = 0; i < middle; i++) {
+        prev = two;
+        two = two->next;
+    }
+    
+    prev->next = nullptr;
+    
+    while (two != nullptr) {
+        temp = one->next;
+        one->next = two;
+        two = two->next;
+        one->next->next = temp;
+        one = temp;
+    }
 }
