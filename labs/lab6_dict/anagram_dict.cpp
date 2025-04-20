@@ -22,7 +22,18 @@ using std::ifstream;
  */ 
 AnagramDict::AnagramDict(const string& filename)
 {
-    /* Your code goes here! */
+    ifstream words(filename);
+    string word;
+    if (words.is_open()) {
+        while (getline(words, word)) {
+            string sorted_word = word;
+            std::sort(sorted_word.begin(), sorted_word.end());
+            auto& anagram_list = dict[sorted_word];
+            if (std::find(anagram_list.begin(), anagram_list.end(), word) == anagram_list.end()) {
+                anagram_list.push_back(word);
+            }
+        }
+    }
 }
 
 /** 
@@ -31,7 +42,14 @@ AnagramDict::AnagramDict(const string& filename)
  */ 
 AnagramDict::AnagramDict(const vector< string >& words)
 {
-    /* Your code goes here! */
+    for (const string& word : words) {
+        string sorted_word = word;
+        std::sort(sorted_word.begin(), sorted_word.end());
+        auto& anagram_list = dict[sorted_word];
+        if (std::find(anagram_list.begin(), anagram_list.end(), word) == anagram_list.end()) {
+            anagram_list.push_back(word);
+        }
+    }
 }
 
 /**
@@ -42,7 +60,13 @@ AnagramDict::AnagramDict(const vector< string >& words)
  */
 vector< string > AnagramDict::get_anagrams(const string& word) const
 {
-    /* Your code goes here! */
+    string sorted_word = word;
+    std::sort(sorted_word.begin(), sorted_word.end());
+
+    auto it = dict.find(sorted_word);
+    if (it != dict.end()) {
+        return it->second;
+    }
     return vector< string >();
 }       
 
@@ -54,8 +78,15 @@ vector< string > AnagramDict::get_anagrams(const string& word) const
  */
 vector< vector< string > > AnagramDict::get_all_anagrams() const
 {
-    /* Your code goes here! */
-    return vector< vector < string > >();
+    vector<vector<string>> all_anagrams;
+
+    for (const auto& pair : dict) {
+        if (pair.second.size() >= 2) {
+            all_anagrams.push_back(pair.second);
+        }
+    }
+
+    return all_anagrams;
 }
 
 

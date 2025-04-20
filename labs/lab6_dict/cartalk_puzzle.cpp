@@ -24,8 +24,25 @@ using std::string;
 vector< StringTriple > cartalk_puzzle(PronounceDict d,
                                       const string& word_list_fname)
 {
-    /* Your code goes here! */
-    return vector< StringTriple >();
+    std::ifstream word_file(word_list_fname);
+    vector< StringTriple > results;
+
+    if (!word_file.is_open()) return results;
+
+    string word;
+    while (word_file >> word) {
+        if (word.length() < 5) {
+            continue;   
+        }
+        string w1 = word.substr(1);
+        string w2 = word[0] + word.substr(2);
+
+        if (d.homophones(word, w1) && d.homophones(word, w2)) {
+            results.emplace_back(word, w1, w2);
+        }
+    }
+
+    return results;
 }
 
 
